@@ -1,26 +1,75 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #0b0b0c;
+  --fg: #e8e3d7;
+  --muted: #bfb9ac;
+  --hairline: rgba(232, 227, 215, 0.12);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html, body {
+  height: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-plex), ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: rgba(232, 227, 215, 0.18);
+}
+/* Full-page centered ghost logo */
+.aow-ghost {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.aow-ghost::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  /* image */
+  background: url("/aow-mark.png") center center / cover no-repeat;
+
+  /* ghost treatment */
+  opacity: 0.01; /* your call */
+  filter: grayscale(1) invert(1) contrast(1.2);
+
+  /* scale + position */
+  transform: scale(1.0) translate(0, 0);
+  transform-origin: center;
+
+  /* optional: smooth on resize */
+  transition: transform 500ms ease;
+}
+
+/* Small screens: slightly up (keeps skull from crowding bottom) */
+@media (max-width: 640px) {
+  .aow-ghost::before {
+    transform: scale(1.12) translate(0, -2%);
+  }
+}
+
+/* Medium screens: tiny right drift */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .aow-ghost::before {
+    transform: scale(1.10) translate(1.5%, -1%);
+  }
+}
+
+/* Large screens: a touch more scale, tiny left drift */
+@media (min-width: 1025px) {
+  .aow-ghost::before {
+    transform: scale(1.08) translate(-1%, 0);
+  }
 }
